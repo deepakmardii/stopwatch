@@ -5,7 +5,20 @@ const StopWatch: React.FC = () => {
   const [second, setSeconds] = useState(0);
   const [milliseconds, setMilliSeconds] = useState(0);
 
-  const handleStart = () => {};
+  const handleStart = () => {
+    let intervalId = null;
+
+    const updateTime = () => {
+      setMilliSeconds((prevMilliSeconds) => {
+        if (prevMilliSeconds === 99) {
+          setSeconds((prevSeconds) => prevSeconds + 1);
+          return 0;
+        }
+        return prevMilliSeconds + 1;
+      });
+    };
+    intervalId = setInterval(updateTime, 10);
+  };
 
   const handleStop = () => {};
 

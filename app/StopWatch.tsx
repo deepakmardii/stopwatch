@@ -4,25 +4,31 @@ import React, { useState } from "react";
 const StopWatch: React.FC = () => {
   const [second, setSeconds] = useState(0);
   const [milliseconds, setMilliSeconds] = useState(0);
+  const [intervalId, setIntervalId] = useState(null);
 
   const handleStart = () => {
-    let intervalId = null;
-
     const updateTime = () => {
       setMilliSeconds((prevMilliSeconds) => {
-        if (prevMilliSeconds === 99) {
+        if (prevMilliSeconds == 99) {
           setSeconds((prevSeconds) => prevSeconds + 1);
           return 0;
         }
         return prevMilliSeconds + 1;
       });
     };
-    intervalId = setInterval(updateTime, 10);
+
+    const id = setInterval(updateTime, 10);
+    setIntervalId(id);
   };
 
-  const handleStop = () => {};
+  const handleStop = () => {
+    clearInterval(intervalId);
+  };
 
-  const handleReset = () => {};
+  const handleReset = () => {
+    setSeconds(0);
+    setMilliSeconds(0);
+  };
   return (
     <div className="flex flex-col text-5xl gap-9 justify-center h-screen items-center">
       <div className="text-7xl font-medium uppercase ">StopWatch</div>
